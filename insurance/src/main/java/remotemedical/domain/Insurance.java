@@ -1,14 +1,15 @@
 package remotemedical.domain;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 import remotemedical.InsuranceApplication;
-import remotemedical.domain.InsuranceCharged;
 
 @Entity
 @Table(name = "Insurance_table")
@@ -22,11 +23,9 @@ public class Insurance {
 
     private Date consultationDate;
 
-    private String symptoms;
+    private Long paymentId;
 
-    private String paymentId;
-
-    private String consultationExpense;
+    private Integer consultationExpense;
 
     public static InsuranceRepository repository() {
         InsuranceRepository insuranceRepository = InsuranceApplication.applicationContext.getBean(
@@ -39,29 +38,19 @@ public class Insurance {
     public static void chargeInsurance(
         RequstPaymentCompleted requstPaymentCompleted
     ) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
+        
         Insurance insurance = new Insurance();
+
+        insurance.setConsultationDate(new Date());
+        insurance.setPaymentId(requstPaymentCompleted.getId());
+        insurance.setConsultationExpense(requstPaymentCompleted.getPrice());
+
         repository().save(insurance);
 
         InsuranceCharged insuranceCharged = new InsuranceCharged(insurance);
         insuranceCharged.publishAfterCommit();
-        */
 
-        /** Example 2:  finding and process
         
-
-        repository().findById(requstPaymentCompleted.get???()).ifPresent(insurance->{
-            
-            insurance // do something
-            repository().save(insurance);
-
-            InsuranceCharged insuranceCharged = new InsuranceCharged(insurance);
-            insuranceCharged.publishAfterCommit();
-
-         });
-        */
 
     }
     //>>> Clean Arch / Port Method

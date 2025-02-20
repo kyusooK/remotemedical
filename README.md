@@ -33,7 +33,7 @@ cd /bin
 See the README.md files inside the each microservices directory:
 
 - receiving
-- hospital
+- consultation
 - insurance
 
 
@@ -48,13 +48,13 @@ mvn spring-boot:run
 ```
  http :8088/receivings id="id"userName="userName"symptoms="symptoms"reservationDate="reservationDate"pastHistory="pastHistory"ReservationType = "RESERVED"
 ```
-- hospital
+- consultation
 ```
  http :8088/consultations id="id"patientName="patientName"patientSymptoms="patientSymptoms"pastHistory="pastHistory"consultationContent="consultationContent"videoId="videoId"ConsultationStatus = "RESERVED"
 ```
 - insurance
 ```
- http :8088/insurances id="id"consultationDate="consultationDate"symptoms="symptoms"paymentId="paymentId"consultationExpense="consultationExpense"
+ http :8088/insurances id="id"consultationDate="consultationDate"paymentId="paymentId"consultationExpense="consultationExpense"
 ```
 
 

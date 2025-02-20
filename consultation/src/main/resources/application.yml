@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: hospital
+    name: consultation
 ---
 
 spring:
@@ -29,7 +29,7 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: hospital
+          group: consultation
 #<<< EDA / Topic Name
           destination: remotemedical
 #>>> EDA / Topic Name
@@ -74,7 +74,7 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: hospital
+          group: consultation
           destination: remotemedical
           contentType: application/json
         event-out:

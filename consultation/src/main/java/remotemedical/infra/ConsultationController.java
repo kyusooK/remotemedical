@@ -50,20 +50,28 @@ public class ConsultationController {
     }
 
     @RequestMapping(
-        value = "/consultations/recordconsultation",
-        method = RequestMethod.POST,
+        value = "/consultations/{id}/recordconsultation",
+        method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
     public Consultation recordConsultation(
+        @PathVariable(value = "id") Long id,
+        @RequestBody RecordConsultationCommand recordConsultationCommand,
         HttpServletRequest request,
-        HttpServletResponse response,
-        @RequestBody RecordConsultationCommand recordConsultationCommand
+        HttpServletResponse response
     ) throws Exception {
         System.out.println(
             "##### /consultation/recordConsultation  called #####"
         );
-        Consultation consultation = new Consultation();
+        Optional<Consultation> optionalConsultation = consultationRepository.findById(
+            id
+        );
+
+        optionalConsultation.orElseThrow(() -> new Exception("No Entity Found")
+        );
+        Consultation consultation = optionalConsultation.get();
         consultation.recordConsultation(recordConsultationCommand);
+
         consultationRepository.save(consultation);
         return consultation;
     }

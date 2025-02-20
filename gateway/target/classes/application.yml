@@ -13,7 +13,7 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/receivings/**, 
-        - id: hospital
+        - id: consultation
           uri: http://localhost:8083
           predicates:
             - Path=/consultations/**, 
@@ -49,8 +49,8 @@ spring:
           uri: http://receiving:8080
           predicates:
             - Path=/receivings/**, 
-        - id: hospital
-          uri: http://hospital:8080
+        - id: consultation
+          uri: http://consultation:8080
           predicates:
             - Path=/consultations/**, 
         - id: insurance

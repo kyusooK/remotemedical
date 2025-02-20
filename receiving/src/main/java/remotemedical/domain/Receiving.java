@@ -30,27 +30,23 @@ public class Receiving {
 
     private String pastHistory;
 
-    private String message;
-
     @Enumerated(EnumType.STRING)
     private ReservationType reservationType;
 
     @PostPersist
     public void onPostPersist() {
+        //Following code causes dependency to external APIs
+        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
         remotemedical.external.Reservation reservation = new remotemedical.external.Reservation();
-        
-        reservation.setTaskId(this.getId().toString());
-        reservation.setTitle("예약 완료");
-        reservation.setDescription(
-        "예약이 완료 되었습니다 예약날짜: " + this.getReservationDate().toString() + " 증상: " + this.getSymptoms());
-        reservation.setNow(true);
-
+        // mappings goes here
         ReceivingApplication.applicationContext
             .getBean(remotemedical.external.ReservationService.class)
             .createReservation(reservation);
 
-        ConsultationReceived consultationReceived = new ConsultationReceived(this);
+        ConsultationReceived consultationReceived = new ConsultationReceived(
+            this
+        );
         consultationReceived.publishAfterCommit();
     }
 
@@ -58,24 +54,15 @@ public class Receiving {
     public void onPostUpdate() {
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
-        repository().findById(this.getId()).ifPresent(receiving ->{
 
-            remotemedical.external.Reservation reservation = new remotemedical.external.Reservation();
-            reservation.setTaskId(this.getId().toString());
-            reservation.setTitle("예약 완료");
-            reservation.setDescription(
-            "예약이 변경 되었습니다 예약날짜: " + receiving.getReservationDate().toString() + " 증상: " + receiving.getSymptoms());
-            reservation.setNow(true);
+        remotemedical.external.Reservation reservation = new remotemedical.external.Reservation();
+        // mappings goes here
+        ReceivingApplication.applicationContext
+            .getBean(remotemedical.external.ReservationService.class)
+            .createReservation(reservation);
 
-            receiving.setReservationType(ReservationType.CANCELED);
-
-            ReceivingApplication.applicationContext
-                .getBean(remotemedical.external.ReservationService.class)
-                .createReservation(reservation);
-
-            ReservationUpdated reservationUpdated = new ReservationUpdated(this);
-            reservationUpdated.publishAfterCommit();
-        });
+        ReservationUpdated reservationUpdated = new ReservationUpdated(this);
+        reservationUpdated.publishAfterCommit();
     }
 
     @PreUpdate
@@ -83,21 +70,14 @@ public class Receiving {
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
-        repository().findById(this.getId()).ifPresent(receiving ->{
+        remotemedical.external.Reservation reservation = new remotemedical.external.Reservation();
+        // mappings goes here
+        ReceivingApplication.applicationContext
+            .getBean(remotemedical.external.ReservationService.class)
+            .createReservation(reservation);
 
-            remotemedical.external.Reservation reservation = new remotemedical.external.Reservation();
-            reservation.setTaskId(this.getId().toString());
-            reservation.setTitle("예약 취소");
-            reservation.setDescription("예약이 취소 되었습니다.");
-            reservation.setNow(true);
-
-            ReceivingApplication.applicationContext
-                .getBean(remotemedical.external.ReservationService.class)
-                .createReservation(reservation);
-
-            ReservationCanceled reservationCanceled = new ReservationCanceled(this);
-            reservationCanceled.publishAfterCommit();
-        });
+        ReservationCanceled reservationCanceled = new ReservationCanceled(this);
+        reservationCanceled.publishAfterCommit();
     }
 
     public static ReceivingRepository repository() {
@@ -109,7 +89,29 @@ public class Receiving {
 
     //<<< Clean Arch / Port Method
     public static void notifyReservation(
-        ReservationCreated reservationCreated) {}
+        ReservationCreated reservationCreated
+    ) {
+        //implement business logic here:
+
+        /** Example 1:  new item 
+        Receiving receiving = new Receiving();
+        repository().save(receiving);
+
+        */
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(reservationCreated.get???()).ifPresent(receiving->{
+            
+            receiving // do something
+            repository().save(receiving);
+
+
+         });
+        */
+
+    }
     //>>> Clean Arch / Port Method
 
 }

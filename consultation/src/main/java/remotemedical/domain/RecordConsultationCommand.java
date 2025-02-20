@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 public class RecordConsultationCommand {
 
-    private Long id;
     private String consultationContent;
 }

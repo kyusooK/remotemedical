@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
-import remotemedical.HospitalApplication;
+import remotemedical.ConsultationApplication;
 import remotemedical.domain.ConsultationDataRegistered;
 import remotemedical.domain.ConsultationDataUpdated;
 
@@ -27,8 +27,6 @@ public class Consultation {
 
     private String pastHistory;
 
-    private Date reservationDate;
-
     private String consultationContent;
 
     private String videoId;
@@ -37,67 +35,11 @@ public class Consultation {
     private ConsultationStatus consultationStatus;
 
     public static ConsultationRepository repository() {
-        ConsultationRepository consultationRepository = HospitalApplication.applicationContext.getBean(
+        ConsultationRepository consultationRepository = ConsultationApplication.applicationContext.getBean(
             ConsultationRepository.class
         );
         return consultationRepository;
     }
-
-    //<<< Clean Arch / Port Method
-    public static void registerConsultationData(
-        ConsultationReceived consultationReceived
-    ) {
-
-        Consultation consultation = new Consultation();
-        consultation.setPatientName(consultationReceived.getUserName());
-        consultation.setPatientSymptoms(consultationReceived.getSymptoms());
-        consultation.setPastHistory(consultationReceived.getPastHistory());
-        consultation.setReservationDate(consultationReceived.getReservationDate());
-        consultation.setConsultationStatus(ConsultationStatus.RESERVED);
-        repository().save(consultation);
-
-        ConsultationDataRegistered consultationDataRegistered = new ConsultationDataRegistered(consultation);
-        consultationDataRegistered.publishAfterCommit();
-
-    }
-
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
-    public static void updateConsultationData(
-        ReservationUpdated reservationUpdated
-    ) {
-        repository().findById(reservationUpdated.getId()).ifPresent(consultation->{
-            
-            consultation.setReservationDate(reservationUpdated.getReservationDate());
-            consultation.setPastHistory(reservationUpdated.getPastHistory());
-            consultation.setPatientSymptoms(reservationUpdated.getSymptoms());
-            repository().save(consultation);
-
-            ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
-            consultationDataUpdated.publishAfterCommit();
-
-         });
-
-    }
-
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
-    public static void updateConsultationData(
-        ReservationCanceled reservationCanceled
-    ) {
-        repository().findById(reservationCanceled.getId()).ifPresent(consultation->{
-            
-            consultation.setConsultationStatus(ConsultationStatus.CANCELED);
-
-            repository().save(consultation);
-
-            ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
-            consultationDataUpdated.publishAfterCommit();
-
-         });
-
-    }
-    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public void progressVideoconsultation(
@@ -116,18 +58,107 @@ public class Consultation {
     public void recordConsultation(
         RecordConsultationCommand recordConsultationCommand
     ) {
-        repository().findById(recordConsultationCommand.getId()).ifPresent(consultation ->{
+        //implement business logic here:
 
-            consultation.setConsultationContent(recordConsultationCommand.getConsultationContent());
+        ConsultationRecorded consultationRecorded = new ConsultationRecorded(
+            this
+        );
+        consultationRecorded.publishAfterCommit();
+    }
 
+    //>>> Clean Arch / Port Method
+
+    //<<< Clean Arch / Port Method
+    public static void registerConsultationData(
+        ConsultationReceived consultationReceived
+    ) {
+        //implement business logic here:
+
+        /** Example 1:  new item 
+        Consultation consultation = new Consultation();
+        repository().save(consultation);
+
+        ConsultationDataRegistered consultationDataRegistered = new ConsultationDataRegistered(consultation);
+        consultationDataRegistered.publishAfterCommit();
+        */
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(consultationReceived.get???()).ifPresent(consultation->{
+            
+            consultation // do something
             repository().save(consultation);
 
-            ConsultationRecorded consultationRecorded = new ConsultationRecorded(this);
-            consultationRecorded.publishAfterCommit();
-        });
+            ConsultationDataRegistered consultationDataRegistered = new ConsultationDataRegistered(consultation);
+            consultationDataRegistered.publishAfterCommit();
+
+         });
+        */
 
     }
 
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public static void updateConsultationData(
+        ReservationUpdated reservationUpdated
+    ) {
+        //implement business logic here:
+
+        /** Example 1:  new item 
+        Consultation consultation = new Consultation();
+        repository().save(consultation);
+
+        ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
+        consultationDataUpdated.publishAfterCommit();
+        */
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(reservationUpdated.get???()).ifPresent(consultation->{
+            
+            consultation // do something
+            repository().save(consultation);
+
+            ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
+            consultationDataUpdated.publishAfterCommit();
+
+         });
+        */
+
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public static void updateConsultationData(
+        ReservationCanceled reservationCanceled
+    ) {
+        //implement business logic here:
+
+        /** Example 1:  new item 
+        Consultation consultation = new Consultation();
+        repository().save(consultation);
+
+        ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
+        consultationDataUpdated.publishAfterCommit();
+        */
+
+        /** Example 2:  finding and process
+        
+
+        repository().findById(reservationCanceled.get???()).ifPresent(consultation->{
+            
+            consultation // do something
+            repository().save(consultation);
+
+            ConsultationDataUpdated consultationDataUpdated = new ConsultationDataUpdated(consultation);
+            consultationDataUpdated.publishAfterCommit();
+
+         });
+        */
+
+    }
     //>>> Clean Arch / Port Method
 
 }

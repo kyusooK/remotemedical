@@ -9,7 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.MimeTypeUtils;
-import remotemedical.HospitalApplication;
+import remotemedical.ConsultationApplication;
 import remotemedical.config.kafka.KafkaProcessor;
 
 //<<< Clean Arch / Outbound Adaptor
@@ -32,7 +32,7 @@ public class AbstractEvent {
         /**
          * spring streams 방식
          */
-        KafkaProcessor processor = HospitalApplication.applicationContext.getBean(
+        KafkaProcessor processor = ConsultationApplication.applicationContext.getBean(
             KafkaProcessor.class
         );
         MessageChannel outputChannel = processor.outboundTopic();

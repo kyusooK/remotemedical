@@ -15,7 +15,6 @@ public class ConsultationDataUpdated extends AbstractEvent {
     private String patientName;
     private String patientSymptoms;
     private String pastHistory;
-    private String consultationContent;
     private ConsultationStatus consultationStatus;
 
     public ConsultationDataUpdated(Consultation aggregate) {

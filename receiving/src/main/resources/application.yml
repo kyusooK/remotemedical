@@ -46,8 +46,9 @@ logging:
     org.springframework.cloud: debug
 
 api:
-  url: 
-    reservation: localhost:0 
+  url:
+    receiving: localhost:8082 
+    reservation: localhost:8072
     
 
 server:
@@ -87,6 +88,7 @@ spring:
 
 api:
   url: 
+    receiving: localhost:8080 
     reservation: reservation:8080 
     
 

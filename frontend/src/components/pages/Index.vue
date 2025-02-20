@@ -38,7 +38,7 @@ export default {
       },
       {
           text: "진료",
-          link: "/consultations/consultations",
+          link: "/hospitals/consultations",
       },
       {
           text: "보험",

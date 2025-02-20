@@ -1,8 +1,9 @@
 <template>
     <div>
-        <Date label="보험청구 날짜" v-model="value.consultationDate" :editMode="editMode"/>
-        <Number label="결제ID" v-model="value.paymentId" :editMode="editMode"/>
-        <Number label="청구비용" v-model="value.consultationExpense" :editMode="editMode"/>
+        <Date label="ConsultationDate" v-model="value.consultationDate" :editMode="editMode"/>
+        <String label="Symptoms" v-model="value.symptoms" :editMode="editMode"/>
+        <String label="결제ID" v-model="value.paymentId" :editMode="editMode"/>
+        <String label="청구비용" v-model="value.consultationExpense" :editMode="editMode"/>
 
         <v-divider class="border-opacity-100 my-divider"></v-divider>
         <v-layout row justify-end>

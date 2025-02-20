@@ -43,22 +43,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consultation
+  name: hospital
   labels:
-    app: consultation
+    app: hospital
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: consultation
+      app: hospital
   template:
     metadata:
       labels:
-        app: consultation
+        app: hospital
     spec:
       containers:
-        - name: consultation
-          image: username/consultation:latest
+        - name: hospital
+          image: username/hospital:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -142,15 +142,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: consultation
+  name: hospital
   labels:
-    app: consultation
+    app: hospital
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: consultation
+    app: hospital
 
 
 ---

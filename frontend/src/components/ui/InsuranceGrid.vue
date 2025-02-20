@@ -25,7 +25,8 @@
                     <thead>
                         <tr>
                         <th>Id</th>
-                        <th>보험청구 날짜</th>
+                        <th>ConsultationDate</th>
+                        <th>Symptoms</th>
                         <th>결제ID</th>
                         <th>청구비용</th>
                         </tr>
@@ -33,7 +34,8 @@
                     <tbody>
                         <tr v-for="(val, idx) in value" :key="val" @click="changeSelectedRow(val)" :style="val === selectedRow ? 'background-color: #f0f3ff;':''">
                             <td class="font-semibold">{{ idx + 1 }}</td>
-                            <td class="whitespace-nowrap" label="보험청구 날짜">{{ val.consultationDate }}</td>
+                            <td class="whitespace-nowrap" label="ConsultationDate">{{ val.consultationDate }}</td>
+                            <td class="whitespace-nowrap" label="Symptoms">{{ val.symptoms }}</td>
                             <td class="whitespace-nowrap" label="결제ID">{{ val.paymentId }}</td>
                             <td class="whitespace-nowrap" label="청구비용">{{ val.consultationExpense }}</td>
                             <v-row class="ma-0 pa-4 align-center">
@@ -97,9 +99,10 @@
                     </v-toolbar>
                     <v-card-text>
                         <div>
-                            <Date label="보험청구 날짜" v-model="selectedRow.consultationDate" :editMode="true"/>
-                            <Number label="결제ID" v-model="selectedRow.paymentId" :editMode="true"/>
-                            <Number label="청구비용" v-model="selectedRow.consultationExpense" :editMode="true"/>
+                            <Date label="ConsultationDate" v-model="selectedRow.consultationDate" :editMode="true"/>
+                            <String label="Symptoms" v-model="selectedRow.symptoms" :editMode="true"/>
+                            <String label="결제ID" v-model="selectedRow.paymentId" :editMode="true"/>
+                            <String label="청구비용" v-model="selectedRow.consultationExpense" :editMode="true"/>
                             <v-divider class="border-opacity-100 my-divider"></v-divider>
                             <v-layout row justify-end>
                                 <v-btn

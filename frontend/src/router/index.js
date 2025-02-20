@@ -12,7 +12,7 @@ const router = createRouter({
       component: () => import('../components/ui/ReceivingGrid.vue'),
     },
     {
-      path: '/hospitals/consultations',
+      path: '/consultations/consultations',
       component: () => import('../components/ui/ConsultationGrid.vue'),
     },
     {

@@ -6,7 +6,6 @@
         </v-card-title>
 
         <v-card-text>
-            <Number label="Id" v-model="value.id" :editMode="editMode"/>
             <String label="ConsultationContent" v-model="value.consultationContent" :editMode="editMode"/>
         </v-card-text>
 
@@ -44,7 +43,6 @@ export default {
         value: {},
     }),
     created() {
-        this.value.id = 0;
         this.value.consultationContent = '';
     },
     watch: {

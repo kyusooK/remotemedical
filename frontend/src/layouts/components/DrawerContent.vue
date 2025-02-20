@@ -14,11 +14,11 @@ import {
                 to: '/receivings/receivings',
             }"
         />
-        <VerticalNavSectionTitle :item="{ heading: '병원' }" />
+        <VerticalNavSectionTitle :item="{ heading: '진료' }" />
         <VerticalNavLink
             :item="{
                 title: '진료',
-                to: '/hospitals/consultations',
+                to: '/consultations/consultations',
             }"
         />
         <VerticalNavSectionTitle :item="{ heading: '보험' }" />

@@ -9,5 +9,6 @@ import remotemedical.infra.AbstractEvent;
 @ToString
 public class ReservationCanceled extends AbstractEvent {
 
+    private Long id;
     private Object reservationType;
 }

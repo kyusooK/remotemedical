@@ -22,11 +22,9 @@ public class Insurance {
 
     private Date consultationDate;
 
-    private String symptoms;
+    private Long paymentId;
 
-    private String paymentId;
-
-    private String consultationExpense;
+    private Integer consultationExpense;
 
     public static InsuranceRepository repository() {
         InsuranceRepository insuranceRepository = InsuranceApplication.applicationContext.getBean(

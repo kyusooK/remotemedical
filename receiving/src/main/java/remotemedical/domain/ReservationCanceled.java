@@ -11,6 +11,7 @@ import remotemedical.infra.AbstractEvent;
 @ToString
 public class ReservationCanceled extends AbstractEvent {
 
+    private Long id;
     private ReservationType reservationType;
 
     public ReservationCanceled(Receiving aggregate) {

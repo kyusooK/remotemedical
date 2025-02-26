@@ -14,7 +14,6 @@ import ConsultationConsultationDetail from "./components/listers/ConsultationCon
 import InsuranceInsuranceManager from "./components/listers/InsuranceInsuranceCards"
 import InsuranceInsuranceDetail from "./components/listers/InsuranceInsuranceDetail"
 
-
 export default new Router({
     // mode: 'history',
     base: process.env.BASE_URL,
@@ -51,8 +50,6 @@ export default new Router({
                 name: 'InsuranceInsuranceDetail',
                 component: InsuranceInsuranceDetail
             },
-
-
 
     ]
 })

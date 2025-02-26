@@ -199,7 +199,9 @@
             isPrivate: false,
             isFormValid: false,
         }),
-        async created() {},
+        async created() {
+            console.log(this.$supabase);
+        },
         methods: {
             decode(value) {
                 return decodeURIComponent(value);

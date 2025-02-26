@@ -67,12 +67,27 @@
                         보험
                     </v-list-item>
 
+                    <v-list-item
+                        class="px-2"
+                        key=""
+                        to="/chats/chatRooms"
+                        @click="startChat()"
+                        color="primary"
+                        style="font-weight:700;"
+                    >
+                        진료 채팅
+                    </v-list-item>
+
 
                 </v-list>
             </v-navigation-drawer>
         </div>
-
-        <v-main>
+        <div v-if="openChatRoom">
+            <chat-app>
+                <chat-chat-room-cards/>
+            </chat-app>
+        </div>
+        <v-main v-else>
             <v-container style="padding:0px;" v-if="urlPath" fluid>
                 <router-view></router-view>
             </v-container>
@@ -148,6 +163,7 @@ export default {
             },
             
         ],
+        openChatRoom: false,
     }),
     
     async created() {
@@ -174,6 +190,7 @@ export default {
             var path = document.location.href.split("#/")
             this.urlPath = path[1];
             this.flipped.fill(false);
+            this.openChatRoom = false;
         },
         goHome() {
             this.urlPath = null;
@@ -184,6 +201,9 @@ export default {
         unflipCard(index) {
             this.$set(this.flipped, index, false);
         },
+        startChat(){
+            this.openChatRoom = true
+        }
     }
 };
 </script>

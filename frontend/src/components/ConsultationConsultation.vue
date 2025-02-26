@@ -92,6 +92,16 @@
             </v-dialog>
         </v-card-actions>
 
+        <document-management-app>
+            <Document tag="upload"/>
+        </document-management-app>
+        <document-management-app>
+            <Document tag="search"/>
+        </document-management-app>
+        <document-management-app>
+            <Document tag="list"/>
+        </document-management-app>
+
         <v-snackbar
             v-model="snackbar.status"
             :top="true"

@@ -9,6 +9,14 @@ spring:
     gateway:
 #<<< API Gateway / Routes
       routes:
+        - id: document
+          uri: http://localhost:8042
+          predicates:
+            - Path=/documents/**, 
+        - id: thumbnail
+          uri: http://localhost:8043
+          predicates:
+            - Path=/thumbnail/**, 
         - id: receiving
           uri: http://localhost:8082
           predicates:

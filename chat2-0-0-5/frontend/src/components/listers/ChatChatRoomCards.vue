@@ -86,6 +86,7 @@
     // const axios = require('axios').default;
     import ChatChatRoom from './../ChatChatRoom.vue';
     import ChatChatRoomDetail from './ChatChatRoomDetail.vue';
+    import { supabase } from '../../supabase';
 
     export default {
         name: 'ChatChatRoomCards',
@@ -122,7 +123,7 @@
         methods:{
             async loadChatRooms(){
                 try {
-                    const { data, error } = await this.$supabase
+                    const { data, error } = await supabase
                     .from('chatrooms')
                     .select('*');
 
@@ -181,7 +182,7 @@
 </script>
 
 
-<style>
+<style scoped>
     .video-card {
         width:300px; 
         margin-left:4.5%; 

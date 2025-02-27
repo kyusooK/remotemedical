@@ -60,7 +60,10 @@
 
 
 <script>
+    import { supabase } from '../../supabase';
+
     const axios = require('axios').default;
+
 
     export default {
         name: 'ChatChatRoomDetail',
@@ -94,7 +97,7 @@
         methods: {
             async loadChatRoomInfo() {
                 try {
-                    const { data, error } = await this.$supabase
+                    const { data, error } = await supabase
                     .from('chatrooms')
                     .select('*')
                     .eq('room_id', this.roomId)
@@ -109,7 +112,7 @@
             },
             async loadMessages() {
                 try {
-                    const { data, error } = await this.$supabase
+                    const { data, error } = await supabase
                     .from('messages')
                     .select('*')
                     .eq('room_id', this.roomId)
@@ -123,7 +126,7 @@
                 }
             },
             setupRealtimeMessages() {
-                this.$supabase
+                supabase
                 .channel('public:messages')
                 .on('postgres_changes', { 
                     event: 'INSERT', 
@@ -148,7 +151,7 @@
                         timestamp: new Date().toISOString()
                     };
 
-                    const { error } = await this.$supabase
+                    const { error } = await supabase
                     .from('messages')
                     .insert([messageData]);
 

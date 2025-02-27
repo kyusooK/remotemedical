@@ -175,6 +175,8 @@
 <script>
     const axios = require('axios').default;
 
+    import { supabase } from '../supabase';
+
 
     export default {
         name: 'ChatChatRoom',
@@ -200,7 +202,6 @@
             isFormValid: false,
         }),
         async created() {
-            console.log(this.$supabase);
         },
         methods: {
             decode(value) {
@@ -237,7 +238,7 @@
                 try {
                     if (this.createMode) {
                         // 생성 모드
-                        const { error } = await this.$supabase
+                        const { error } = await supabase
                             .from('chatrooms')
                             .insert([{
                                 room_id: this.value.room_id,
@@ -251,7 +252,7 @@
                         this.$emit('add', this.value);
                     } else {
                         // 수정 모드
-                        const { error } = await this.$supabase
+                        const { error } = await supabase
                             .from('chatrooms')
                             .update({
                                 room_pw: this.value.room_pw,
@@ -280,7 +281,7 @@
             async remove() {
                 try {
                     if (!this.offline) {
-                        const { error } = await this.$supabase
+                        const { error } = await supabase
                             .from('chatrooms')
                             .delete()
                             .eq('room_id', this.value.room_id);

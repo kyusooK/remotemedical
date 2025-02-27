@@ -6,7 +6,6 @@ import Managing from "./components";
 import router from './router';
 Vue.config.productionTip = false;
 require('./GlobalStyle.css');
-import { supabase } from './supabase'
 
 const axios = require("axios").default;
 
@@ -64,8 +63,6 @@ Vue.prototype.$ManagerLists.forEach(function(item, idx) {
     }
   })
 })
-
-Vue.prototype.$supabase = supabase;
 
 new Vue({
   vuetify,

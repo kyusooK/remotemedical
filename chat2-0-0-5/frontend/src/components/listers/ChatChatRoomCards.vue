@@ -75,8 +75,10 @@
                 </v-row>
             </div>
         </v-col>
-        <v-row>
-            <ChatChatRoom :offline="offline" class="video-card" v-for="(value, index) in values" v-model="values[index]" v-bind:key="index" @delete="remove" @enterRoom="handleEnterRoom"/>
+        <v-row class="ma-0 pa-0">
+            <v-col cols="12" sm="6" md="3" lg="3" v-for="(value, index) in values">
+                <ChatChatRoom :offline="offline" v-model="values[index]" v-bind:key="index" @delete="remove" @enterRoom="handleEnterRoom"/>
+            </v-col>
         </v-row>
     </div>
 </template>
@@ -182,7 +184,7 @@
 </script>
 
 
-<style scoped>
+<style sco>
     .video-card {
         width:300px; 
         margin-left:4.5%; 

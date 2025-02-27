@@ -1,33 +1,44 @@
 <template>
-    <v-card outlined>
-        <v-card-title class="chat-header">
+    <v-card outlined style="display: flex; flex-direction: column; height: 100%;">
+        <!-- 채팅방 헤더 -->
+        <v-card-title style="border-bottom: 1px solid #e0e0e0; background-color: #f5f5f5; min-height: 64px;">
             <v-btn style="margin-right: 10px;" icon @click="goList"><v-icon>mdi-arrow-left</v-icon></v-btn>
             <v-icon left>mdi-chat</v-icon>
-            {{chatRoomInfo.room_name}} 
+            {{chatRoomInfo.room_name}}
             <v-chip small class="ml-2">
                 Room #{{chatRoomInfo.room_id}}
             </v-chip>
         </v-card-title>
 
         <!-- 채팅 메시지 영역 -->
-        <v-card-text class="chat-container">
-            <div class="messages-wrapper">
+        <v-card-text style="flex: 1; overflow-y: auto; padding: 20px; background-color: #f8f9fa;">
+            <div class="messages-wrapper" style="display: flex; flex-direction: column; gap: 12px;">
                 <div v-for="(message, index) in messages" 
-                     :key="index"
-                     :class="['message-item', message.user_id === userInfo.user_id ? 'my-message' : 'other-message']">
+                    :key="index"
+                    :class="['message-item', message.user_id === userInfo.user_id ? 'my-message' : 'other-message']"
+                    style="display: flex; flex-direction: column; max-width: 70%;" 
+                    :style="message.user_id === userInfo.user_id ? 'margin-left: auto' : 'margin-right: auto'">
                     
                     <!-- 상대방 메시지 -->
                     <template v-if="message.user_id !== userInfo.user_id">
-                        <div class="user-name">{{ message.user_name }} ({{ message.user_id }})</div>
-                        <div class="message-bubble other" style="width: fit-content;">
+                        <div class="user-name" style="font-size: 0.8rem; color: #666; margin-bottom: 4px; margin-left: 8px;">
+                            {{ message.user_name }} ({{ message.user_id }})
+                        </div>
+                        <div class="message-bubble other" style="width: fit-content; padding: 8px 16px; border-radius: 16px; background-color: white; color: #333; border-top-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                             {{ message.content }}
+                        </div>
+                        <div class="timestamp" style="font-size: 0.7rem; color: #999; margin-top: 4px; margin-left: 8px;">
+                            {{ new Date(message.timestamp).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false }) }}
                         </div>
                     </template>
 
                     <!-- 내 메시지 -->
                     <template v-else>
-                        <div class="message-bubble mine">
+                        <div class="message-bubble mine" style="width: fit-content; padding: 8px 16px; border-radius: 16px; background-color: #e3f2fd; color: #1976d2; border-top-right-radius: 4px; align-self: flex-end;">
                             {{ message.content }}
+                        </div>
+                        <div class="timestamp" style="font-size: 0.7rem; color: #999; margin-top: 4px; align-self: flex-end;">
+                            {{ new Date(message.timestamp).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false }) }}
                         </div>
                     </template>
                 </div>
@@ -35,7 +46,7 @@
         </v-card-text>
 
         <!-- 채팅 입력 영역 -->
-        <v-card-actions class="chat-input">
+        <v-card-actions style="padding: 16px; border-top: 1px solid #e0e0e0; background-color: white; min-height: 80px;">
             <v-text-field
                 v-model="newMessage"
                 placeholder="메시지를 입력하세요..."
@@ -43,13 +54,10 @@
                 dense
                 hide-details
                 @keypress.enter="sendMessage"
+                style="width: 100%;"
             >
                 <template v-slot:append>
-                    <v-btn
-                        color="primary"
-                        icon
-                        @click="sendMessage"
-                    >
+                    <v-btn color="primary" icon @click="sendMessage">
                         <v-icon>mdi-send</v-icon>
                     </v-btn>
                 </template>
@@ -60,10 +68,8 @@
 
 
 <script>
-    import { supabase } from '../../supabase';
-
     const axios = require('axios').default;
-
+    import { supabase } from '../../supabase';
 
     export default {
         name: 'ChatChatRoomDetail',
@@ -194,69 +200,5 @@
     };
 </script>
 
-<style scoped>
-.chat-header {
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #f5f5f5;
-}
-
-.chat-container {
-    height: 60vh;
-    overflow-y: auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-}
-
-.messages-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.message-item {
-    display: flex;
-    flex-direction: column;
-    max-width: 70%;
-}
-
-.my-message {
-    align-self: flex-end;
-}
-
-.other-message {
-    align-self: flex-start;
-}
-
-.user-name {
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 4px;
-    margin-left: 8px;
-}
-
-.message-bubble {
-    padding: 8px 16px;
-    border-radius: 16px;
-    position: relative;
-    word-wrap: break-word;
-}
-
-.message-bubble.mine {
-    background-color: #e3f2fd;
-    color: #1976d2;
-    border-top-right-radius: 4px;
-}
-
-.message-bubble.other {
-    background-color: white;
-    color: #333;
-    border-top-left-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-.chat-input {
-    padding: 16px;
-    border-top: 1px solid #e0e0e0;
-    background-color: white;
-}
+<style>
 </style>

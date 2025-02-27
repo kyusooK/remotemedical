@@ -82,11 +82,11 @@
                 </v-list>
             </v-navigation-drawer>
         </div>
-        <div v-if="openChatRoom">
+        <v-main v-if="openChatRoom">
             <chat-app>
                 <chat-chat-room-cards/>
             </chat-app>
-        </div>
+        </v-main>
         <v-main v-else>
             <v-container style="padding:0px;" v-if="urlPath" fluid>
                 <router-view></router-view>
